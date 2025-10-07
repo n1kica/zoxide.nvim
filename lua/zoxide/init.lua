@@ -1,27 +1,26 @@
 local M = {}
 
 local config = {}
-local uv = vim.loop
+local uv = vim.uv
 
 local function zoxide(query)
 	local stdout = uv.new_pipe(false)
 	local path = ""
 
 	local handle
-	handle = uv.spawn("zoxide", { args = { "query", query or "" }, stdio = { nil, stdout, nil } }, function(code)
+	handle = uv.spawn("zoxide", { args = { "query", query or "" }, stdio = { nil, stdout, nil } }, function(_)
 		stdout:close()
 		handle:close()
-		if code == 0 and path ~= "" then
-			-- Remove trailing newline and change directory
-			print("Changed to: " .. path)
-		else
-			print("zoxide query failed or no result")
-		end
+		vim.schedule(function()
+			print(path)
+			vim.api.nvim_set_current_dir(path)
+		end)
 	end)
 
-	stdout:read_start(function(err, data)
+	-- TODO: log errors
+	stdout:read_start(function(_, data)
 		if data then
-			path = path .. data
+			path = data:gsub("\n", "")
 		end
 	end)
 end
