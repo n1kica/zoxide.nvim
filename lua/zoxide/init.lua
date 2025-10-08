@@ -9,10 +9,14 @@ local config = {
 local uv = vim.uv or vim.loop
 
 local function zoxide_jump(query)
-	local stdout = uv.new_pipe(false)
+	local stdout = assert(uv.new_pipe())
 
-	local handle
-	handle = uv.spawn("zoxide", { hide = true, args = { "query", query }, stdio = { nil, stdout, nil } }, function()
+	local handle ---@type uv.uv_process_t
+	handle = uv.spawn("zoxide", {
+		stdio = { nil, stdout, nil },
+		hide = true,
+		args = { "query", query },
+	}, function()
 		handle:close()
 	end)
 
