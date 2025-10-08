@@ -1,6 +1,10 @@
 local M = {}
 
-local config = {}
+---@class ZoxideConfig
+---@field cmd string
+local config = {
+	cmd = "Z",
+}
 
 local uv = vim.uv or vim.loop
 
@@ -32,7 +36,7 @@ end
 function M.setup(opts)
 	config = vim.tbl_extend("force", config, opts or {})
 
-	vim.api.nvim_create_user_command("Z", function(cmd)
+	vim.api.nvim_create_user_command(config.cmd, function(cmd)
 		zoxide_jump(cmd.args)
 	end, { nargs = 1 })
 end
