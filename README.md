@@ -1,10 +1,10 @@
 # zoxide.nvim
 
-Neovim plugin for [zoxide](https://github.com/ajeetdsouza/zoxide) integration.
+Minimal single-file Neovim wrapper around [zoxide](https://github.com/ajeetdsouza/zoxide).
 
 ## Requirements
 
-- Neovim 0.10+
+- [neovim](https://github.com/neovim/neovim) 0.7+
 - [zoxide](https://github.com/ajeetdsouza/zoxide) installed
 
 ## Installation
