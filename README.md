@@ -30,5 +30,5 @@ Changes Neovim working directory using zoxide's database of frequently used dire
 
 ```vim
 :Z nvim
-:Z Docu
+:Z User downl
 ```

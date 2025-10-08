@@ -8,14 +8,14 @@ local config = {
 
 local uv = vim.uv or vim.loop
 
-local function zoxide_jump(query)
+local function zoxide_jump(args)
 	local stdout = assert(uv.new_pipe())
 
 	local handle ---@type uv.uv_process_t
 	handle = uv.spawn("zoxide", {
 		stdio = { nil, stdout, nil },
 		hide = true,
-		args = { "query", query },
+		args = { "query", unpack(args) },
 	}, function()
 		handle:close()
 	end)
@@ -27,10 +27,8 @@ local function zoxide_jump(query)
 			path = data:gsub("\n", "")
 		else
 			vim.schedule(function()
-				if path then
-					print(path)
-				end
 				vim.api.nvim_set_current_dir(path)
+				print(path)
 			end)
 			stdout:close()
 		end
@@ -41,8 +39,8 @@ function M.setup(opts)
 	config = vim.tbl_extend("force", config, opts or {})
 
 	vim.api.nvim_create_user_command(config.cmd, function(cmd)
-		zoxide_jump(cmd.args)
-	end, { nargs = 1 })
+		zoxide_jump(vim.split(cmd.args, "%s+"))
+	end, { nargs = "+" })
 end
 
 return M
