@@ -4,7 +4,7 @@ Neovim plugin for [zoxide](https://github.com/ajeetdsouza/zoxide) integration.
 
 ## Requirements
 
-- Neovim 0.5+
+- Neovim 0.10+
 - [zoxide](https://github.com/ajeetdsouza/zoxide) installed
 
 ## Installation
@@ -13,6 +13,7 @@ Neovim plugin for [zoxide](https://github.com/ajeetdsouza/zoxide) integration.
 ```lua
 {
   "n1kica/zoxide.nvim",
+  cmd = "Z",
   opts = {}
 }
 ```
@@ -23,7 +24,7 @@ Neovim plugin for [zoxide](https://github.com/ajeetdsouza/zoxide) integration.
 :Z <query>
 ```
 
-Changes the current working directory using zoxide's database of frequently used directories.
+Changes Neovim working directory using zoxide's database of frequently used directories.
 
 ## Examples
 
