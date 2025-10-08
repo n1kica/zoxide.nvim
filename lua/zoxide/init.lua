@@ -31,10 +31,10 @@ end
 
 function M.setup(opts)
 	config = vim.tbl_extend("force", config, opts or {})
-
-	vim.api.nvim_create_user_command("Z", function(cmd)
-		zoxide_jump(cmd.args)
-	end, { nargs = 1 })
 end
+
+vim.api.nvim_create_user_command("Z", function(cmd)
+	zoxide_jump(cmd.args)
+end, { nargs = 1 })
 
 return M
