@@ -39,8 +39,15 @@ function M.setup(opts)
 	config = vim.tbl_extend("force", config, opts or {})
 
 	vim.api.nvim_create_user_command(config.cmd, function(cmd)
-		zoxide_jump(vim.split(cmd.args, "%s+"))
-	end, { nargs = "+" })
+		local args = vim.split(cmd.args, "%s+", { trimempty = true })
+		if #args > 0 then
+			zoxide_jump(args)
+		else
+			local path = vim.fn.expand("~")
+			vim.api.nvim_set_current_dir(path)
+			print(path)
+		end
+	end, { nargs = "*" })
 end
 
 return M
